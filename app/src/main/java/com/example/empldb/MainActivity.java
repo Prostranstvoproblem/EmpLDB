@@ -55,13 +55,22 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         if (v.getId() == R.id.buttonGet){
             db = dataBaseHelper.getReadableDatabase();
             cursor = db.rawQuery("SELECT * FROM " + DataBaseHelper.MY_TABLE, null);
+
             String[] headers = new String[]{DataBaseHelper.COLUMN_NAME, DataBaseHelper.COLUMN_SURNAME, DataBaseHelper.COLUMN_YEAR};
-            adapter = new SimpleCursorAdapter(getApplicationContext(), android.R.layout.simple_dropdown_item_1line, cursor, headers, new int[]{android.R.id.text1, android.R.id.text1, android.R.id.text1 }, 0);
+
+            adapter = new SimpleCursorAdapter(this, R.layout.main_window, cursor, headers,
+                    new int[]{R.id.textView1, R.id.textView2, R.id.textView3}, 1);
+
             listUser.setAdapter(adapter);
         }
     }
 
-
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        db.close();
+        cursor.close();
+    }
 
     public void ShowWindow (){
         AlertDialog.Builder dialog = new AlertDialog.Builder(MainActivity.this);
@@ -88,7 +97,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 ContentValues cv = new ContentValues();
                 cv.put(DataBaseHelper.COLUMN_SURNAME, surname.getText().toString());
                 cv.put(DataBaseHelper.COLUMN_NAME, name.getText().toString());
-                cv.put(DataBaseHelper.COLUMN_YEAR, Integer.parseInt(age.getText().toString()));
+                cv.put(DataBaseHelper.COLUMN_YEAR, age.getText().toString());
 
                 db = dataBaseHelper.getReadableDatabase();
                 db.insert(DataBaseHelper.MY_TABLE, null, cv);
