@@ -58,8 +58,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
             String[] headers = new String[]{DataBaseHelper.COLUMN_NAME, DataBaseHelper.COLUMN_SURNAME, DataBaseHelper.COLUMN_YEAR};
 
-            adapter = new SimpleCursorAdapter(this, R.layout.add_window, cursor, headers,
-                    new int[]{android.R.id.text1, android.R.id.text1, android.R.id.text2}, 1);
+            adapter = new SimpleCursorAdapter(this, R.layout.main_window, cursor, headers,
+                    new int[]{R.id.textView1, R.id.textView2, R.id.textView3}, 1);
 
             listUser.setAdapter(adapter);
         }
